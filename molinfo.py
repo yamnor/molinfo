@@ -93,6 +93,8 @@ def main():
     'methyl salicylate' : 'O=C(OC)c1ccccc1O',
     'zanamivir (Relenza)' : 'CC(=O)NC1C(C=C(OC1C(C(CO)O)O)C(=O)O)N=C(N)N',
     'oseltamivir (Tamiflu)': 'CCC(CC)OC1C=C(CC(C1NC(=O)C)N)C(=O)OCC',
+    'benzene hexachloride (BHC)' : 'C1(C(C(C(C(C1Cl)Cl)Cl)Cl)Cl)Cl',
+    'pentachlorobiphenyl (PCB)' : 'C1=CC(=C(C=C1C2=CC(=C(C(=C2)Cl)Cl)Cl)Cl)Cl',
     }
 
   select_molecule = st.selectbox(
