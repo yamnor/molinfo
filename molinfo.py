@@ -31,7 +31,7 @@ def show_2dview(smi):
     st.error('Try again.')
 
 def show_3dview(smi):
-  viewsize = (300, 700)
+  viewsize = (300, 800)
   mol = smi2mol(smi)
   if mol is not None:
     viewer = py3Dmol.view(height = viewsize[0], width = viewsize[1])
@@ -47,9 +47,12 @@ def show_3dview(smi):
 
 def get_alogps(smi):
   url = 'http://www.vcclab.org/web/alogps/calc?' + urllib.parse.urlencode({'SMILES': smi})
-  txt = urlopen(url).read()[44:-20]
-  dat = txt.split()
-  return {'logP' : float(dat[0]), 'logS' : float(dat[1])}
+  txt = urlopen(url).read()
+  if 'mol_N' in txt:
+    dat = txt[44:-20].split()
+    return {'logP' : float(dat[0]), 'logS' : float(dat[1])}
+  else:
+    st.error('Try again.')
 
 def show_properties(smi):
   mol = Chem.MolFromSmiles(smi)  
@@ -101,9 +104,10 @@ def main():
     st.markdown("---")
     show_properties(smi)
     st.markdown("---")
-    col = st.columns(2)
-    col[0].write(show_2dview(smi))
-    col[1].write(show_3dview(smi))
+    show_2dview(smi)
+    st.markdown("---")
+    show_3dview(smi)
+    st.markdown("---")
 
 if __name__ == "__main__":
     main()
