@@ -72,6 +72,14 @@ def show_properties(smi):
   else:
     st.error('Try again.')
 
+def show_info(smi):
+  st.balloons()
+  show_2dview(smi)
+  st.markdown("---")
+  show_properties(smi)
+  st.markdown("---")
+  show_3dview(smi)
+
 def main():
 
   st.set_page_config(
@@ -84,32 +92,25 @@ def main():
     'acetylsalicylic acid (Aspirin)' : 'CC(=O)Oc1ccccc1C(=O)O',
     'methyl salicylate' : 'O=C(OC)c1ccccc1O',
     'zanamivir (Relenza)' : 'CC(=O)NC1C(C=C(OC1C(C(CO)O)O)C(=O)O)N=C(N)N',
-    'oseltamivir (Tamiflu)': 'CCC(CC)OC1C=C(CC(C1NC(=O)C)N)C(=O)OCC'}
+    'oseltamivir (Tamiflu)': 'CCC(CC)OC1C=C(CC(C1NC(=O)C)N)C(=O)OCC',
+    }
 
   select_molecule = st.selectbox(
     "Select molecule",
     tuple(molecule_dic.keys()))
 
   if select_molecule == "Enter SMILES":
-
     smi = st.text_input('SMILES:', 'CC(=O)Oc1ccccc1C(=O)O')
     st.markdown(
       """
       [SMILES](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system)
       is a specification for describing the chemical structure of molecules using short strings.
       """)
-
+    if st.button("😊"):
+      show_info(smi)
   else:
-
     smi = molecule_dic[select_molecule]
-
-  if st.button("😊"):
-    st.balloons()
-    show_2dview(smi)
-    st.markdown("---")
-    show_properties(smi)
-    st.markdown("---")
-    show_3dview(smi)
+    show_info(smi)
 
 if __name__ == "__main__":
     main()
