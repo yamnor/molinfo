@@ -32,25 +32,31 @@ def show_2dview(smi):
 
 def show_3dview(smi):
   viewsize = (340, 340)
-  mol = smi2mol(smi)
+  mol = smi2mol(smi)  
   if mol is not None:
-    viewer = py3Dmol.view(height = viewsize[0], width = viewsize[1])
-    molblock = Chem.MolToMolBlock(mol)
-    viewer.addModel(molblock, 'mol')
-    viewer.setStyle({'stick':{}})
-    viewer.zoomTo()
-    viewer.spin('y', 1)
-    viewer.setBackgroundColor('black')
-    showmol(viewer, height = viewsize[0], width = viewsize[1])
-    st.balloons()
+    col = st.columns(3)
+    col[0].write(' ')
+    with col[1]:
+      viewer = py3Dmol.view(height = viewsize[0], width = viewsize[1])
+      molblock = Chem.MolToMolBlock(mol)
+      viewer.addModel(molblock, 'mol')
+      viewer.setStyle({'stick':{}})
+      viewer.zoomTo()
+      viewer.spin('y', 1)
+      viewer.setBackgroundColor('black')
+      showmol(viewer, height = viewsize[0], width = viewsize[1])
+    col[2].write(' ')
   else:
     st.error('Try again.')
 
 def get_alogps(smi):
   url = 'http://www.vcclab.org/web/alogps/calc?' + urllib.parse.urlencode({'SMILES': smi})
   txt = urlopen(url).read()
-  dat = txt[44:-20].split()
-  return {'logP' : float(dat[0]), 'logS' : float(dat[1])}
+  if 'logP' in str(txt):
+    dat = txt[44:-20].split()
+    return {'logP' : float(dat[0]), 'logS' : float(dat[1])}
+  else:
+    return {'logP' : 0.0, 'logS' : 0.0}
 
 def show_properties(smi):
   mol = Chem.MolFromSmiles(smi)  
@@ -98,14 +104,12 @@ def main():
     smi = molecule_dic[select_molecule]
 
   if st.button("😊"):
-
+    st.balloons()
+    show_2dview(smi)
     st.markdown("---")
     show_properties(smi)
     st.markdown("---")
-    show_2dview(smi)
-    st.markdown("---")
     show_3dview(smi)
-    st.markdown("---")
 
 if __name__ == "__main__":
     main()
