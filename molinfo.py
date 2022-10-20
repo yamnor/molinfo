@@ -31,7 +31,7 @@ def show_2dview(smi):
     st.error('Try again.')
 
 def show_3dview(smi):
-  viewsize = (300, 800)
+  #viewsize = (300, 800)
   mol = smi2mol(smi)
   if mol is not None:
     viewer = py3Dmol.view(height = viewsize[0], width = viewsize[1])
@@ -40,7 +40,8 @@ def show_3dview(smi):
     viewer.setStyle({'stick':{}})
     viewer.zoomTo()
     viewer.spin('y', 1)
-    showmol(viewer, height = viewsize[0], width = viewsize[1])
+    #showmol(viewer, height = viewsize[0], width = viewsize[1])
+    showmol(viewer)
     st.balloons()
   else:
     st.error('Try again.')
