@@ -7,6 +7,8 @@ from rdkit.Chem.Draw import SimilarityMaps, rdMolDraw2D
 import py3Dmol
 from stmol import showmol
 
+import urllib.parse
+
 def smi2mol(smi):
   mol = Chem.MolFromSmiles(smi)
   if mol is not None:
@@ -44,6 +46,8 @@ def show_3dview(smi):
 
 def show_properties(smi):
   mol = Chem.MolFromSmiles(smi)
+  url = 'http://www.vcclab.org/web/alogps/calc?' + urllib.parse.urlencode({'SMILES': smi})
+  st.write(url)
   if mol is not None:
     col = st.columns(5)
     col[0].metric(label = "log P",               value = '{:.2f}'.format(Descriptors.MolLogP(mol)))
