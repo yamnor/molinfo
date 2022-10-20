@@ -4,8 +4,6 @@ from rdkit import Chem
 from rdkit.Chem import AllChem, Draw, Descriptors, rdMolDescriptors
 from rdkit.Chem.Draw import SimilarityMaps, rdMolDraw2D
 
-from openeye import oechem
-
 import py3Dmol
 from stmol import showmol
 
