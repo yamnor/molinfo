@@ -48,11 +48,8 @@ def show_3dview(smi):
 def get_alogps(smi):
   url = 'http://www.vcclab.org/web/alogps/calc?' + urllib.parse.urlencode({'SMILES': smi})
   txt = urlopen(url).read()
-  if 'mol_N' in txt:
-    dat = txt[44:-20].split()
-    return {'logP' : float(dat[0]), 'logS' : float(dat[1])}
-  else:
-    st.error('Try again.')
+  dat = txt[44:-20].split()
+  return {'logP' : float(dat[0]), 'logS' : float(dat[1])}
 
 def show_properties(smi):
   mol = Chem.MolFromSmiles(smi)  
