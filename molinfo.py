@@ -46,6 +46,8 @@ def show_3dview(smi):
 
 def show_properties(smi):
   mol = Chem.MolFromSmiles(smi)
+  mol2 = oechem.OEGraphMol()
+  oechem.OEParseSmiles(mol2, smi)
   if mol is not None:
     col = st.columns(5)
     col[0].metric(label = "log P",               value = '{:.2f}'.format(Descriptors.MolLogP(mol)))
