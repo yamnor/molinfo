@@ -1,2 +1,4 @@
 channels:
   - openeye
+ dependencies:
+  - openeye-toolkits
