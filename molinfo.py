@@ -8,6 +8,7 @@ import py3Dmol
 from stmol import showmol
 
 import urllib.parse
+from urllib.request import urlopen
 
 def smi2mol(smi):
   mol = Chem.MolFromSmiles(smi)
@@ -30,7 +31,7 @@ def show_2dview(smi):
     st.error('Try again.')
 
 def show_3dview(smi):
-  viewsize = (400, 700)
+  viewsize = (300, 700)
   mol = smi2mol(smi)
   if mol is not None:
     viewer = py3Dmol.view(height = viewsize[0], width = viewsize[1])
@@ -44,17 +45,23 @@ def show_3dview(smi):
   else:
     st.error('Try again.')
 
-def show_properties(smi):
-  mol = Chem.MolFromSmiles(smi)
+def get_alogps(smi):
   url = 'http://www.vcclab.org/web/alogps/calc?' + urllib.parse.urlencode({'SMILES': smi})
-  st.write(url)
+  txt = urlopen(url).read()[44:-20]
+  dat = txt.split()
+  return {'logP' : float(dat[0]), 'logS' : float(dat[1])}
+
+def show_properties(smi):
+  mol = Chem.MolFromSmiles(smi)  
+  alogps = get_alogps(smi)
   if mol is not None:
-    col = st.columns(5)
-    col[0].metric(label = "log P",               value = '{:.2f}'.format(Descriptors.MolLogP(mol)))
-    col[1].metric(label = "Polar Surface Area",  value = '{:.2f}'.format(Descriptors.TPSA(mol)))
-    col[2].metric(label = "H-bond Acceptors",    value = Descriptors.NumHAcceptors(mol))
-    col[3].metric(label = "H-bond Donors",       value = Descriptors.NumHDonors(mol))
-    col[4].metric(label = "Molelular Weight",    value = '{:.2f}'.format(Descriptors.MolWt(mol)))
+    col = st.columns(6)
+    col[0].metric(label = "log P",      value = '{:.2f}'.format(alogps['logP']))
+    col[1].metric(label = "log S",      value = '{:.2f}'.format(alogps['logS']))
+    col[2].metric(label = "tPSA",       value = '{:.1f}'.format(Descriptors.TPSA(mol)))
+    col[3].metric(label = "H-bond Accep", value = Descriptors.NumHAcceptors(mol))
+    col[4].metric(label = "H-bond Donor", value = Descriptors.NumHDonors(mol))
+    col[5].metric(label = "MW",         value = '{:.1f}'.format(Descriptors.MolWt(mol)))
   else:
     st.error('Try again.')
 
@@ -94,9 +101,9 @@ def main():
     st.markdown("---")
     show_properties(smi)
     st.markdown("---")
-    show_2dview(smi)
-    st.markdown("---")
-    show_3dview(smi)
+    col = st.columns(2)
+    col[0].write(show_2dview(smi))
+    col[1].write(show_3dview(smi))
 
 if __name__ == "__main__":
     main()
