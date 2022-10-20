@@ -31,7 +31,7 @@ def show_2dview(smi):
     st.error('Try again.')
 
 def show_3dview(smi):
-  viewsize = (325, 325)
+  viewsize = (340, 340)
   mol = smi2mol(smi)
   if mol is not None:
     viewer = py3Dmol.view(height = viewsize[0], width = viewsize[1])
