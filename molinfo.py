@@ -1,8 +1,7 @@
 import streamlit as st
 
 from rdkit import Chem
-from rdkit.Chem import AllChem, Draw, Descriptors, rdMolDescriptors
-from rdkit.Chem.Draw import SimilarityMaps, rdMolDraw2D
+from rdkit.Chem import AllChem, Draw, Descriptors
 
 import py3Dmol
 from stmol import showmol
@@ -76,14 +75,16 @@ def show_info(smi):
   st.balloons()
   show_2dview(smi)
   st.markdown("---")
-  show_properties(smi)
+  with st.spinner("Please wait..."):
+    show_properties(smi)
   st.markdown("---")
   show_3dview(smi)
 
 def main():
 
   st.set_page_config(
-    page_title = 'molinfo')
+    page_title = 'molinfo',
+    initial_sidebar_state = 'collapsed')
 
   st.title("molinfo")
   
@@ -103,16 +104,22 @@ def main():
 
   if select_molecule == "Enter SMILES":
     smi = st.text_input('SMILES:', 'CC(=O)Oc1ccccc1C(=O)O')
-    st.markdown(
-      """
-      [SMILES](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system)
-      is a specification for describing the chemical structure of molecules using short strings.
-      """)
     if st.button("😊"):
       show_info(smi)
   else:
     smi = molecule_dic[select_molecule]
     show_info(smi)
+
+  with st.sidebar:
+
+    st.subheader('Notice')
+    st.markdown(
+      """
+      * This [streamlit](https://streamlit.io/) app uses [RDKit](https://www.rdkit.org),
+        [py3Dmol](https://pypi.org/project/py3Dmol/), and [stmol](https://github.com/napoles-uach/stmol) libraries.
+      * `log P` and `log S` are obtained from [the ALOGPS homepage](http://www.vcclab.org/lab/alogps/).
+      """
+    )
 
 if __name__ == "__main__":
     main()
