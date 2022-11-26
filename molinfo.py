@@ -69,12 +69,12 @@ def show_properties(smi):
     col[4].metric(label = "HBDo",  value = Descriptors.NumHDonors(mol))
     col[5].metric(label = "RotB",  value = Descriptors.NumRotatableBonds(mol))
     '''
-    `logP` : [オクタノール・水分配係数](https://w.wiki/62VE)
-    `logS` : 水に対する溶解度
-    `tPSA` : [トポロジカル極性表面積](https://w.wiki/62VA)（**t**opological **P**olar **S**urface **A**rea）
-    `HBAc` : 水素結合アクセプター（**H**ydrogen **B**ond **Ac**ceptors）の数
-    `HBDo` : 水素結合ドナー（**H**ydrogen **B**ond **Do**nors）の数
-    `RotB` : 回転できる共有結合（**Rot**atable **B**onds）の数
+    - `logP` : [オクタノール・水分配係数](https://w.wiki/62VE)
+    - `logS` : 水に対する溶解度
+    - `tPSA` : [トポロジカル極性表面積](https://w.wiki/62VA)（**t**opological **P**olar **S**urface **A**rea）
+    - `HBAc` : 水素結合アクセプター（**H**ydrogen **B**ond **Ac**ceptors）の数
+    - `HBDo` : 水素結合ドナー（**H**ydrogen **B**ond **Do**nors）の数
+    - `RotB` : 回転できる共有結合（**Rot**atable **B**onds）の数
     '''
   else:
     st.error('Try again.')
