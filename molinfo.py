@@ -62,12 +62,12 @@ def show_properties(smi):
   alogps = get_alogps(smi)
   if mol is not None:
     col = st.columns(6)
-    col[0].metric(label = "logP", value = '{:.2f}'.format(alogps['logP']))
-    col[1].metric(label = "logS", value = '{:.2f}'.format(alogps['logS']))
-    col[2].metric(label = "tPSA", value = '{:.1f}'.format(Descriptors.TPSA(mol)))
-    col[3].metric(label = "HBAc",  value = Descriptors.NumHAcceptors(mol))
-    col[4].metric(label = "HBDo",  value = Descriptors.NumHDonors(mol))
-    col[5].metric(label = "RotB",  value = Descriptors.NumRotatableBonds(mol))
+    col[0].metric(label = "`logP`", value = '{:.2f}'.format(alogps['logP']))
+    col[1].metric(label = "`logS`", value = '{:.2f}'.format(alogps['logS']))
+    col[2].metric(label = "`tPSA`", value = '{:.1f}'.format(Descriptors.TPSA(mol)))
+    col[3].metric(label = "`HBAc`",  value = Descriptors.NumHAcceptors(mol))
+    col[4].metric(label = "`HBDo`",  value = Descriptors.NumHDonors(mol))
+    col[5].metric(label = "`RotB`",  value = Descriptors.NumRotatableBonds(mol))
     '''
     - `logP` : [オクタノール・水分配係数](https://w.wiki/62VE)
     - `logS` : 水に対する溶解度
