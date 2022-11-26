@@ -62,12 +62,20 @@ def show_properties(smi):
   alogps = get_alogps(smi)
   if mol is not None:
     col = st.columns(6)
-    col[0].metric(label = "log P",      value = '{:.2f}'.format(alogps['logP']))
-    col[1].metric(label = "log S",      value = '{:.2f}'.format(alogps['logS']))
-    col[2].metric(label = "tPSA",       value = '{:.1f}'.format(Descriptors.TPSA(mol)))
-    col[3].metric(label = "H-bond Accep", value = Descriptors.NumHAcceptors(mol))
-    col[4].metric(label = "H-bond Donor", value = Descriptors.NumHDonors(mol))
-    col[5].metric(label = "MW",         value = '{:.1f}'.format(Descriptors.MolWt(mol)))
+    col[0].metric(label = "logP", value = '{:.2f}'.format(alogps['logP']))
+    col[1].metric(label = "logS", value = '{:.2f}'.format(alogps['logS']))
+    col[2].metric(label = "tPSA", value = '{:.1f}'.format(Descriptors.TPSA(mol)))
+    col[3].metric(label = "HBAc",  value = Descriptors.NumHAcceptors(mol))
+    col[4].metric(label = "HBDo",  value = Descriptors.NumHDonors(mol))
+    col[5].metric(label = "RotB",  value = Descriptors.NumRotatableBonds(mol))
+    '''
+    `logP` : [オクタノール・水分配係数](https://w.wiki/62VE)
+    `logS` : 水に対する溶解度
+    `tPSA` : [トポロジカル極性表面積](https://w.wiki/62VA)（**t**opological **P**olar **S**urface **A**rea）
+    `HBAc` : 水素結合アクセプター（**H**ydrogen **B**ond **Ac**ceptors）の数
+    `HBDo` : 水素結合ドナー（**H**ydrogen **B**ond **Do**nors）の数
+    `RotB` : 回転できる共有結合（**Rot**atable **B**onds）の数
+    '''
   else:
     st.error('Try again.')
 
